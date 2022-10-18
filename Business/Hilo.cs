@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Data;
 
 namespace Business
 {
@@ -16,15 +15,21 @@ namespace Business
 
         public void Comprobar()
         {
+            Servicio.SetHiloId(Id);
             MiHilo = new Thread(Servicio.Start);
-            Servicio.Alternar();
+            //Servicio.Alternar();
             MiHilo.Start();
         }
 
-        public void Espera()
+        public void Espera(int delay)
         {
-            MiHilo.Join();
-            Console.WriteLine("Hilo número " + Id + " terminado");
+            Thread.Sleep(delay);
+        }
+
+        
+        public override string ToString()
+        {
+            return Servicio.DameTipo() + "  " + Id;
         }
     }
 }
