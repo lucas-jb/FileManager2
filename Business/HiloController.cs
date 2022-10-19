@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Data;
 
 namespace Business
 {
@@ -27,6 +28,26 @@ namespace Business
             var hilo = GenerarHilo(new ServicioLineas(), path);
             MisHilos.Add(hilo.Id, hilo);
             hilo.Comprobar();
+        }
+
+        public void CargarConfig(List<string> listaconfig)
+        {
+            Data.Configuration.
+            foreach (string hilo in listaconfig)
+            {
+                ConstruirHilo(hilo);
+            }
+        }
+
+        public void ConstruirHilo(string hilo)
+        {
+
+        }
+
+        public List<string> GuardarConfig()
+        {
+            var x = new List<string>();
+            return x;
         }
     }
 }

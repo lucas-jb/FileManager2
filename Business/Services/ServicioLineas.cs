@@ -11,7 +11,7 @@ namespace Business
     {
         private bool Arrancado = true;
         public int Delay = 0;
-        public string Path = "C:\\Users\\Lucas\\Desktop\\pruebillas\\directorioBBDD\\BBDD_OK.bbdd";
+        public string Path = "FicheroDefault";
         public int LimiteLineas = 5;
         public int NumeroLineas = 0;
         private int HiloId;
@@ -38,6 +38,7 @@ namespace Business
             {
                 Arrancado = LineasFichero.ComprobarModificacion(LimiteLineas, Path);
             }
+            Data.Info.Log.ImprimirLog(DateTime.Now.ToString()+"Hilo ID: "+HiloId.ToString()+" Ruta: "+Path+" Limite lineas: "+LimiteLineas.ToString()+" Numero lineas: "+NumeroLineas.ToString());
         }
 
         public void Start()

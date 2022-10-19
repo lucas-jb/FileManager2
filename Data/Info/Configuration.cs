@@ -8,12 +8,14 @@ namespace Data.Info
 {
     public static class Configuration
     {
+        private static string ConfigFilePath = "config.txt";
+
         public static List<string> LeerConfiguracion()
         {
             return new List<string>();
         }
 
-        public static void CargarConfiguracion(string path)
+        public static void CargarConfiguracion(List<string> info)
         {
 
         }

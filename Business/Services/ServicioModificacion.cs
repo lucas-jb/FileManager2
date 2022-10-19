@@ -12,7 +12,7 @@ namespace Business
         public DateTime UltimaModificacionGuardada = DateTime.Now;
         private bool Arrancado = true;
         public int Delay = 0;
-        public string Path = "C:\\Users\\Lucas\\Desktop\\pruebillas\\directorioBBDD";
+        public string Path = "directorioDefault";
         private int HiloId;
 
         public void ComprobarModificacion()
@@ -28,6 +28,7 @@ namespace Business
                 Thread.Sleep(Delay);
                 ComprobarModificacion();
             }
+            Data.Info.Log.ImprimirLog(DateTime.Now.ToString() + "Hilo ID: " + HiloId.ToString() + " Ruta: " + Path + " Ultima modificació¨: "+UltimaModificacionGuardada.ToString());
             CambiarRuta(Path);
         }
         public void Alternar()

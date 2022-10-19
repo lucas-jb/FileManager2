@@ -8,10 +8,11 @@ namespace Data.Info
 {
     public static class Log
     {
-        private static string LogFilePath = ""; 
-        public static void ImprimirLog(string log)
-        {
+        private static string LogFilePath = "logs.txt"; 
 
+        public static async Task ImprimirLog(string log)
+        {
+            await File.WriteAllTextAsync(LogFilePath, log);
         }
     }
 }
