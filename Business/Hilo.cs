@@ -11,11 +11,13 @@ namespace Business
         public int Id { get; set; }
         private Thread MiHilo;
         public IServicioFichero Servicio;
+        public string Path = string.Empty;
 
 
         public void Comprobar()
         {
             Servicio.SetHiloId(Id);
+            Servicio.CambiarRuta(Path);
             MiHilo = new Thread(Servicio.Start);
             //Servicio.Alternar();
             MiHilo.Start();

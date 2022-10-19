@@ -38,8 +38,8 @@ namespace View
                               "2 - Número de líneas.\n" +
                               "Introduce el tipo del hilo a crear:");
             int id = PedirNum();
-            if(id == 1) { controller.CreateModificacion(); }
-            if(id == 2) { controller.CreateLineas(); }
+            if(id == 1) { controller.CreateModificacion(PedirText()); }
+            if(id == 2) { controller.CreateLineas(PedirText()); }
             if(id < 1 || id > 2) { return true; }
             return true;
         }
@@ -82,6 +82,7 @@ namespace View
                 "1. Arrancar / Parar\n" +
                 "2. Fichero a comproboar\n" +
                 "3. Delay\n" +
+                "4. Actualizar información\n" +
                 "0. Salir al menú principal\n");
 
                 int select = Convert.ToInt32(Console.ReadLine());
@@ -90,7 +91,8 @@ namespace View
                 if (select == 1) { controller.MisHilos[id].Servicio.Alternar(); }
                 if (select == 2) { controller.MisHilos[id].Servicio.CambiarRuta(PedirText()); }
                 if (select == 3) { controller.MisHilos[id].Servicio.CambiarDelay(PedirNum()); }
-                if (select < 1 || select > 3) { check = false; }
+                if (select == 4) { }
+                if (select < 1 || select > 4) { check = false; }
             }
             return true;
         }
@@ -106,6 +108,7 @@ namespace View
                 "2. Fichero a comproboar\n" +
                 "3. Número límite de líneas\n" +
                 "4. Delay\n" +
+                "5. Actualizar información\n" +
                 "0. Salir al menú principal\n");
 
                 int select = Convert.ToInt32(Console.ReadLine());
@@ -115,7 +118,8 @@ namespace View
                 if (select == 2) { controller.MisHilos[id].Servicio.CambiarRuta(PedirText()); }
                 if (select == 3) { controller.MisHilos[id].Servicio.CambiarLimiteLineas(PedirNum()); }
                 if (select == 4) { controller.MisHilos[id].Servicio.CambiarDelay(PedirNum()); }
-                if (select < 1 || select > 4) { check = false; }
+                if (select == 5) { }
+                if (select < 1 || select > 5) { check = false; }
             }
             return true;
         }

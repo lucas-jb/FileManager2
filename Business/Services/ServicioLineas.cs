@@ -46,7 +46,7 @@ namespace Business
             CambiarRuta(Path);
             while (Arrancado)
             {
-                //HiloController.MisHilos[id].Espera(Delay);
+                Thread.Sleep(Delay);
                 ComprobarModificacion();
                 CambiarRuta(Path);
             }
@@ -69,7 +69,7 @@ namespace Business
 
         public string DameInfo()
         {
-            return "Ruta: "+Path+Environment.NewLine+"Delay: "+Delay.ToString()+Environment.NewLine+"Limite de líneas: "+LimiteLineas.ToString()+Environment.NewLine+ "Líneas fichero: " + NumeroLineas.ToString() + Environment.NewLine + "Arrancado: " +Arrancado.ToString();
+            return "Ruta: "+Path+Environment.NewLine+"Delay: "+Delay.ToString() +"ms"+Environment.NewLine+"Limite de líneas: "+LimiteLineas.ToString()+Environment.NewLine+ "Líneas fichero: " + NumeroLineas.ToString() + Environment.NewLine + "Arrancado: " +Arrancado.ToString();
         }
         public void SetHiloId(int id)
         {

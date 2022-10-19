@@ -11,20 +11,20 @@ namespace Business
         public Dictionary<int, Hilo> MisHilos = new Dictionary<int, Hilo>();
         public static int Cont = 0;
 
-        public Hilo GenerarHilo(IServicioFichero Tipo)
+        public Hilo GenerarHilo(IServicioFichero Tipo, string path)
         {
             Cont++;
-            return new Hilo() { Id = Cont, Servicio = Tipo };
+            return new Hilo() { Id = Cont, Servicio = Tipo, Path = path };
         }
-        public void CreateModificacion()
+        public void CreateModificacion(string path)
         {
-            var hilo = GenerarHilo(new ServicioModificacion());
+            var hilo = GenerarHilo(new ServicioModificacion(), path);
             MisHilos.Add(hilo.Id, hilo);
             hilo.Comprobar();
         }
-        public void CreateLineas()
+        public void CreateLineas(string path)
         {
-            var hilo = GenerarHilo(new ServicioLineas());
+            var hilo = GenerarHilo(new ServicioLineas(), path);
             MisHilos.Add(hilo.Id, hilo);
             hilo.Comprobar();
         }

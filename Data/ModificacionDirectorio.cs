@@ -10,17 +10,25 @@ namespace Data
     {
         public static bool ComprobarModificacion(DateTime UltimaModificacionGuardada, string path)
         {
-            var a = Directory.GetLastWriteTime(path);
-            if (a == UltimaModificacionGuardada)
+            if (Directory.Exists(path))
             {
-                return true;
+                var a = Directory.GetLastWriteTime(path);
+                if (a == UltimaModificacionGuardada)
+                {
+                    return true;
+                }
+                return false;
             }
             return false;
         }
 
         public static DateTime SincronizarModificacion(string path)
         {
-            return File.GetLastWriteTime(path);
+            if (Directory.Exists(path))
+            {
+                return Directory.GetLastWriteTime(path);
+            }
+            return DateTime.Now;
         }
     }
 }

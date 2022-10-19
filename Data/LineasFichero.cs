@@ -19,15 +19,19 @@ namespace Data
         {
             bool check = true;
             int numLineas = 0;
-            while(check == true)
+            if (File.Exists(path))
             {
-                try
+                while (check == true)
                 {
-                    check = false;
-                    numLineas = File.ReadLines(path).Count();
-                }
-                catch{
-                    check = true;
+                    try
+                    {
+                        check = false;
+                        numLineas = File.ReadLines(path).Count();
+                    }
+                    catch
+                    {
+                        check = true;
+                    }
                 }
             }
             return numLineas;
