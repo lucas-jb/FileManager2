@@ -9,11 +9,11 @@ namespace Business
 {
     public class ServicioModificacion : IServicioFichero
     {
-        public DateTime UltimaModificacionGuardada = DateTime.Now;
-        private bool Arrancado = true;
-        public int Delay = 0;
-        public string Path = "directorioDefault";
-        private int HiloId;
+        public DateTime UltimaModificacionGuardada { get; set; } = DateTime.Now;
+        private bool Arrancado { get; set; } = true;
+        public int Delay { get; set; } = 0;
+        public string Path { get; set; }  = "directorioDefault";
+        private int HiloId { get; set; }
 
         public void ComprobarModificacion()
         {
@@ -28,7 +28,7 @@ namespace Business
                 Thread.Sleep(Delay);
                 ComprobarModificacion();
             }
-            Data.Info.Log.ImprimirLog(DateTime.Now.ToString() + "Hilo ID: " + HiloId.ToString() + " Ruta: " + Path + " Ultima modificació¨: "+UltimaModificacionGuardada.ToString());
+            Data.Info.Log.ImprimirLog(DateTime.Now.ToString() + " - Hilo ID: " + HiloId.ToString() + " Ruta: " + Path + " Ultima modificación¨: "+UltimaModificacionGuardada.ToString());
             CambiarRuta(Path);
         }
         public void Alternar()

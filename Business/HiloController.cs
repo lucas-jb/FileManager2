@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 using Data;
 
@@ -30,24 +31,31 @@ namespace Business
             hilo.Comprobar();
         }
 
-        public void CargarConfig(List<string> listaconfig)
+        public void CargarConfig()
         {
-            Data.Configuration.
-            foreach (string hilo in listaconfig)
+            List<string> config = Data.Info.Configuration.CargarConfiguracion();
+            if((config.Count > 0) && (MisHilos.Count == 0))
             {
-                ConstruirHilo(hilo);
+                foreach (string hilo in config)
+                {
+                    Hilo hiloaux = JsonSerializer.Deserialize<Hilo>(hilo);
+                }
             }
         }
 
-        public void ConstruirHilo(string hilo)
+        public void GuardarConfig()
         {
-
-        }
-
-        public List<string> GuardarConfig()
-        {
-            var x = new List<string>();
-            return x;
+            if(MisHilos.Count > 0)
+            {
+                List<string> hilosString = new List<string>();
+                foreach (Hilo hilo in MisHilos.Values)
+                {
+                    string aux = JsonSerializer.Serialize<Hilo>(hilo);
+                    aux = aux.Split("\"Servicio\":{")[0] + "\"Servicio\":{"+ JsonSerializer.Serialize<IServicioFichero>(hilo.Servicio)+"}}";
+                    hilosString.Add(aux);
+                }
+                Data.Info.Configuration.GuardarConfiguracion(hilosString);
+            }
         }
     }
 }

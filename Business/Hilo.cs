@@ -9,9 +9,9 @@ namespace Business
     public class Hilo
     {
         public int Id { get; set; }
+        public string Path { get; set; } = string.Empty;
         private Thread MiHilo;
-        public IServicioFichero Servicio;
-        public string Path = string.Empty;
+        public IServicioFichero Servicio { get; set; }
 
 
         public void Comprobar()

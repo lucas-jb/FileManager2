@@ -21,6 +21,8 @@ namespace View
             Console.WriteLine("SERVICIOS ASÍNCRONOS\n" +
                 "1. Crear un hilo.\n" +
                 "2. Modificar un hilo.\n" +
+                "3. Cargar configuración.\n" +
+                "4. Guardar configuración.\n" +
                 "0. Salir\n");
 
             int select = Convert.ToInt32(Console.ReadLine());
@@ -28,7 +30,9 @@ namespace View
 
             if(select == 1) {return CrearHilo(); }
             if(select == 2) {return ModificarHilo(); }
-            if(select < 1 || select > 2) { return false; }
+            if(select == 3) {controller.CargarConfig(); }
+            if(select == 4) {controller.GuardarConfig(); }
+            if(select < 1 || select > 4) { return false; }
             return res;
         }
         static bool CrearHilo()
@@ -38,8 +42,8 @@ namespace View
                               "2 - Número de líneas.\n" +
                               "Introduce el tipo del hilo a crear:");
             int id = PedirNum();
-            if(id == 1) { controller.CreateModificacion(PedirText()); }
-            if(id == 2) { controller.CreateLineas(PedirText()); }
+            if(id == 1) { controller.CreateModificacion(PedirText(true)); }
+            if(id == 2) { controller.CreateLineas(PedirText(false)); }
             if(id < 1 || id > 2) { return true; }
             return true;
         }
@@ -89,7 +93,7 @@ namespace View
                 Console.Clear();
 
                 if (select == 1) { controller.MisHilos[id].Servicio.Alternar(); }
-                if (select == 2) { controller.MisHilos[id].Servicio.CambiarRuta(PedirText()); }
+                if (select == 2) { controller.MisHilos[id].Servicio.CambiarRuta(PedirText(true)); }
                 if (select == 3) { controller.MisHilos[id].Servicio.CambiarDelay(PedirNum()); }
                 if (select == 4) { }
                 if (select < 1 || select > 4) { check = false; }
@@ -115,7 +119,7 @@ namespace View
                 Console.Clear();
 
                 if (select == 1) { controller.MisHilos[id].Servicio.Alternar(); }
-                if (select == 2) { controller.MisHilos[id].Servicio.CambiarRuta(PedirText()); }
+                if (select == 2) { controller.MisHilos[id].Servicio.CambiarRuta(PedirText(false)); }
                 if (select == 3) { controller.MisHilos[id].Servicio.CambiarLimiteLineas(PedirNum()); }
                 if (select == 4) { controller.MisHilos[id].Servicio.CambiarDelay(PedirNum()); }
                 if (select == 5) { }
@@ -124,11 +128,15 @@ namespace View
             return true;
         }
 
-        static string PedirText()
+        static string PedirText(bool tipo)
         {
-            Console.WriteLine("Introduce la ruta absoluta: ");
+            Console.WriteLine("(Dejar en blanco para ruta por defecto)\n" + "Introduce la ruta absoluta:");
             string text = Console.ReadLine();
-
+            if(text == string.Empty) 
+            {
+                if (!tipo) { text = "ficheroDefault"; } 
+                if (tipo) { text = "directorioDefault"; } 
+            }
             return text;
         }
         static int PedirNum()

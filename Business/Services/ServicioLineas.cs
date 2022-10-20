@@ -9,12 +9,12 @@ namespace Business
 {
     public class ServicioLineas : IServicioFichero
     {
-        private bool Arrancado = true;
-        public int Delay = 0;
-        public string Path = "FicheroDefault";
-        public int LimiteLineas = 5;
-        public int NumeroLineas = 0;
-        private int HiloId;
+        private bool Arrancado { get; set; } = true;
+        public int Delay { get; set; } = 0;
+        public string Path { get; set; } = "FicheroDefault";
+        public int LimiteLineas { get; set; } = 5;
+        public int NumeroLineas { get; set; } = 0;
+        private int HiloId { get; set; }
         public void Alternar()
         {
             if (Arrancado)
@@ -38,7 +38,7 @@ namespace Business
             {
                 Arrancado = LineasFichero.ComprobarModificacion(LimiteLineas, Path);
             }
-            Data.Info.Log.ImprimirLog(DateTime.Now.ToString()+"Hilo ID: "+HiloId.ToString()+" Ruta: "+Path+" Limite lineas: "+LimiteLineas.ToString()+" Numero lineas: "+NumeroLineas.ToString());
+            Data.Info.Log.ImprimirLog(DateTime.Now.ToString()+" - Hilo ID: "+HiloId.ToString()+" Ruta: "+Path+" Limite lineas: "+LimiteLineas.ToString()+" Numero lineas: "+NumeroLineas.ToString());
         }
 
         public void Start()

@@ -10,14 +10,48 @@ namespace Data.Info
     {
         private static string ConfigFilePath = "config.txt";
 
-        public static List<string> LeerConfiguracion()
+        public static List<string> CargarConfiguracion()
         {
-            return new List<string>();
+            bool check = true;
+            List<string> lineas = new List<string>();
+            if (File.Exists(ConfigFilePath))
+            {
+                while (check == true)
+                {
+                    try
+                    {
+                        check = false;
+                        lineas = File.ReadLines(ConfigFilePath).ToList();
+                    }
+                    catch
+                    {
+                        check = true;
+                    }
+                }
+            }
+            return lineas;
         }
 
-        public static void CargarConfiguracion(List<string> info)
+        public static void GuardarConfiguracion(List<string> info)
         {
-
+            bool check = true;
+            if (File.Exists(ConfigFilePath))
+            {
+                while (check == true)
+                {
+                    try
+                    {
+                        check = false;
+                        File.WriteAllText(ConfigFilePath, String.Empty);
+                        File.WriteAllLines(ConfigFilePath, info);
+                    }
+                    catch
+                    {
+                        check = true;
+                    }
+                }
+            }
         }
+
     }
 }
