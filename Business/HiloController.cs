@@ -18,6 +18,12 @@ namespace Business
             Cont++;
             return new Hilo() { Id = Cont, Servicio = Tipo, Path = path };
         }
+
+        //public static Hilo GenerarHilo(string service, string hilo)
+        //{
+            
+        //}
+
         public static void CreateModificacion(string path)
         {
             var hilo = GenerarHilo(new ServicioModificacion() { Path=path}, path);
@@ -38,7 +44,23 @@ namespace Business
             {
                 foreach (string hilo in config)
                 {
-                    Hilo hiloaux = JsonSerializer.Deserialize<Hilo>(hilo);
+                    string service = hilo.Split("\"Servicio\": ")[1];
+                    service = service.Substring(0, service.Length - 1);
+
+                    string quitar = ",\"Servicio\": " + service;
+                    string auxhilo = hilo.Replace(quitar, "");
+
+                    Hilo hiloaux = JsonSerializer.Deserialize<Hilo>(auxhilo);
+
+                    if (service.Contains("Lineas"))
+                    {
+                        hiloaux.Servicio = JsonSerializer.Deserialize<ServicioLineas>(service);
+                    }
+                    if (service.Contains("Modificacion"))
+                    {
+                        hiloaux.Servicio = JsonSerializer.Deserialize<ServicioModificacion>(service);
+                    }
+                    MisHilos.Add(hiloaux.Id, hiloaux);
                 }
             }
         }
@@ -50,9 +72,10 @@ namespace Business
                 List<string> hilosString = new List<string>();
                 foreach (Hilo hilo in MisHilos.Values)
                 {
-                    string aux = JsonSerializer.Serialize<Hilo>(hilo);
-                    aux = aux.Split("\"Servicio\":{")[0] + "\"Servicio\":{"+ JsonSerializer.Serialize<IServicioFichero>(hilo.Servicio)+"}}";
-                    hilosString.Add(aux);
+                    string hiloJson = JsonSerializer.Serialize<Hilo>(hilo);
+                    string serviceJson = hilo.Servicio.DameJson();
+                    hiloJson = hiloJson.Split("\"Servicio\":{")[0] + "\"Servicio\": "+ serviceJson + "}";
+                    hilosString.Add(hiloJson);
                 }
                 Data.Info.Configuration.GuardarConfiguracion(hilosString);
             }

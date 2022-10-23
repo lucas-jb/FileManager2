@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 using Data;
 
@@ -9,12 +10,14 @@ namespace Business
 {
     public class ServicioLineas : IServicioFichero
     {
-        private bool Arrancado { get; set; } = true;
+        public bool Arrancado { get; set; } = true;
         public int Delay { get; set; } = 0;
         public string Path { get; set; }
         public int LimiteLineas { get; set; } = 5;
         public int NumeroLineas { get; set; } = 0;
-        private int HiloId { get; set; }
+        public int HiloId { get; set; }
+        public string Tipo { get; set; } = "Lineas";
+
         public void Alternar()
         {
             if (Arrancado)
@@ -38,7 +41,6 @@ namespace Business
             {
                 Arrancado = LineasFichero.ComprobarModificacion(LimiteLineas, Path);
             }
-            Data.Info.Log.ImprimirLog(DateTime.Now.ToString()+" - Hilo ID: "+HiloId.ToString()+" Ruta: "+Path+" Limite lineas: "+LimiteLineas.ToString()+" Numero lineas: "+NumeroLineas.ToString() + Environment.NewLine);
         }
 
         public void Start()
@@ -51,6 +53,7 @@ namespace Business
                 ComprobarModificacion();
                 CambiarRuta(Path);
             }
+            Data.Info.Log.ImprimirLog(DateTime.Now.ToString() + " - Hilo ID: " + HiloId.ToString() + " Ruta: " + Path + " Limite lineas: " + LimiteLineas.ToString() + " Numero lineas: " + NumeroLineas.ToString() + Environment.NewLine);
             CambiarRuta(Path);
         }
 
@@ -75,6 +78,21 @@ namespace Business
         public void SetHiloId(int id)
         {
             HiloId = id;
+        }
+
+        public string DameJson()
+        {
+            return JsonSerializer.Serialize<ServicioLineas>(
+                new ServicioLineas()
+                                    {
+                                    Arrancado=Arrancado,
+                                    LimiteLineas=LimiteLineas,
+                                    Delay=Delay,
+                                    NumeroLineas=NumeroLineas,
+                                    Path=Path,
+                                    HiloId=HiloId,
+                                    Tipo = Tipo
+                                    });
         }
     }
 }

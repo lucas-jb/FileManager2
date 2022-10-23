@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 using Data;
 
@@ -13,7 +14,8 @@ namespace Business
         private bool Arrancado { get; set; } = true;
         public int Delay { get; set; } = 0;
         public string Path { get; set; }
-        private int HiloId { get; set; }
+        public int HiloId { get; set; }
+        public string Tipo { get; set; } = "Modificacion";
 
         public void ComprobarModificacion()
         {
@@ -69,6 +71,19 @@ namespace Business
         public void SetHiloId(int id)
         {
             HiloId = id;
+        }
+
+        public string DameJson()
+        {
+            return JsonSerializer.Serialize<ServicioModificacion>(
+                new ServicioModificacion() { 
+                    UltimaModificacionGuardada = UltimaModificacionGuardada, 
+                    Arrancado = Arrancado, 
+                    Delay = Delay, 
+                    HiloId = HiloId, 
+                    Path = Path,
+                    Tipo = Tipo
+                });
         }
     }
 }

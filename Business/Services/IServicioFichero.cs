@@ -17,5 +17,6 @@ namespace Business
         public void CambiarDelay(int delay);
         public void CambiarLimiteLineas(int limit);
         public string DameInfo();
+        public string DameJson();
     }
 }

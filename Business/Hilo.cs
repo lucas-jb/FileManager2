@@ -18,7 +18,6 @@ namespace Business
         {
             Servicio.SetHiloId(Id);
             MiHilo = new Thread(Servicio.Start);
-            //Servicio.Alternar();
             MiHilo.Start();
         }
 
@@ -26,7 +25,6 @@ namespace Business
         {
             Thread.Sleep(delay);
         }
-
         
         public override string ToString()
         {

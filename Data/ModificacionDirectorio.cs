@@ -15,11 +15,11 @@ namespace Data
                 Directory.CreateDirectory(path);
             }
             var a = Directory.GetLastWriteTime(path);
-            if (a == UltimaModificacionGuardada)
+            if (a > UltimaModificacionGuardada)
             {
-                return true;
+                return false;
             }
-            return false;
+            return true;
         }
 
         public static DateTime SincronizarModificacion(string path)

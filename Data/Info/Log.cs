@@ -22,7 +22,7 @@ namespace Data.Info
                 try
                 {
                     check = false;
-                    File.WriteAllText(LogFilePath, log);
+                    File.AppendAllText(LogFilePath, log);
                 }
                 catch
                 {
@@ -30,5 +30,7 @@ namespace Data.Info
                 }
             }
         }
+
+
     }
 }
