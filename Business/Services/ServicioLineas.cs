@@ -55,6 +55,13 @@ namespace Business
             }
             Data.Info.Log.ImprimirLog(DateTime.Now.ToString() + " - Hilo ID: " + HiloId.ToString() + " Ruta: " + Path + " Limite lineas: " + LimiteLineas.ToString() + " Numero lineas: " + NumeroLineas.ToString() + Environment.NewLine);
             CambiarRuta(Path);
+            EliminarLineasSobrantes();
+        }
+
+        private void EliminarLineasSobrantes()
+        {
+            int lineasSobrantes = NumeroLineas - LimiteLineas;
+            Data.LineasFichero.EliminarLineasSobrantes(lineasSobrantes, Path);
         }
 
         public void CambiarDelay(int delay)

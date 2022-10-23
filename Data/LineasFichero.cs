@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -36,6 +37,41 @@ namespace Data
                 }
             }
             return numLineas;
+        }
+
+        public static void EliminarLineasSobrantes(int numLineas, string path)
+        {
+            bool check = true;
+            if (!File.Exists(path))
+            {
+                File.Create(path);
+            }
+            while (check == true)
+            {
+                try
+                {
+                    check = false;
+                    var lineas = File.ReadAllLines(path);
+                    List<string> lines = new List<string>();
+                    int cont = 0;
+                    foreach (string linea in lineas)
+                    {
+                        if (cont == numLineas)
+                        {
+                            lines.Add(linea);
+                        }
+                        else
+                        {
+                            cont++;
+                        }
+                    }
+                    File.WriteAllLines(path, lines);
+                }
+                catch
+                {
+                    check = true;
+                }
+            }
         }
     }
 }
