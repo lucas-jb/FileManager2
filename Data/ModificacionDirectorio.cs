@@ -10,14 +10,14 @@ namespace Data
     {
         public static bool ComprobarModificacion(DateTime UltimaModificacionGuardada, string path)
         {
-            if (Directory.Exists(path))
+            if (!Directory.Exists(path))
             {
-                var a = Directory.GetLastWriteTime(path);
-                if (a == UltimaModificacionGuardada)
-                {
-                    return true;
-                }
-                return false;
+                Directory.CreateDirectory(path);
+            }
+            var a = Directory.GetLastWriteTime(path);
+            if (a == UltimaModificacionGuardada)
+            {
+                return true;
             }
             return false;
         }

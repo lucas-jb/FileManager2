@@ -8,30 +8,30 @@ using Data;
 
 namespace Business
 {
-    public class HiloController
+    public static class HiloController
     {
-        public Dictionary<int, Hilo> MisHilos = new Dictionary<int, Hilo>();
+        public static Dictionary<int, Hilo> MisHilos = new Dictionary<int, Hilo>();
         public static int Cont = 0;
 
-        public Hilo GenerarHilo(IServicioFichero Tipo, string path)
+        public static Hilo GenerarHilo(IServicioFichero Tipo, string path)
         {
             Cont++;
             return new Hilo() { Id = Cont, Servicio = Tipo, Path = path };
         }
-        public void CreateModificacion(string path)
+        public static void CreateModificacion(string path)
         {
-            var hilo = GenerarHilo(new ServicioModificacion(), path);
+            var hilo = GenerarHilo(new ServicioModificacion() { Path=path}, path);
             MisHilos.Add(hilo.Id, hilo);
             hilo.Comprobar();
         }
-        public void CreateLineas(string path)
+        public static void CreateLineas(string path)
         {
-            var hilo = GenerarHilo(new ServicioLineas(), path);
+            var hilo = GenerarHilo(new ServicioLineas() { Path = path }, path);
             MisHilos.Add(hilo.Id, hilo);
             hilo.Comprobar();
         }
 
-        public void CargarConfig()
+        public static void CargarConfig()
         {
             List<string> config = Data.Info.Configuration.CargarConfiguracion();
             if((config.Count > 0) && (MisHilos.Count == 0))
@@ -43,7 +43,7 @@ namespace Business
             }
         }
 
-        public void GuardarConfig()
+        public static void GuardarConfig()
         {
             if(MisHilos.Count > 0)
             {

@@ -8,11 +8,27 @@ namespace Data.Info
 {
     public static class Log
     {
-        private static string LogFilePath = "logs.txt"; 
+        private static string LogFilePath = "logs.txt";
 
-        public static async Task ImprimirLog(string log)
+        public static void ImprimirLog(string log)
         {
-            await File.WriteAllTextAsync(LogFilePath, log);
+            bool check = true;
+            if (!File.Exists(LogFilePath))
+            {
+                File.Create(LogFilePath);
+            }
+            while (check == true)
+            {
+                try
+                {
+                    check = false;
+                    File.WriteAllText(LogFilePath, log);
+                }
+                catch
+                {
+                    check = true;
+                }
+            }
         }
     }
 }

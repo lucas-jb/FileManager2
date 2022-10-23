@@ -8,7 +8,7 @@ namespace Data.Info
 {
     public static class Configuration
     {
-        private static string ConfigFilePath = "config.txt";
+        private static string ConfigFilePath = "conf.txt";
 
         public static List<string> CargarConfiguracion()
         {
@@ -35,20 +35,21 @@ namespace Data.Info
         public static void GuardarConfiguracion(List<string> info)
         {
             bool check = true;
-            if (File.Exists(ConfigFilePath))
+            if (!File.Exists(ConfigFilePath))
             {
-                while (check == true)
+                File.Create(ConfigFilePath);
+            }
+            while (check == true)
+            {
+                try
                 {
-                    try
-                    {
-                        check = false;
-                        File.WriteAllText(ConfigFilePath, String.Empty);
-                        File.WriteAllLines(ConfigFilePath, info);
-                    }
-                    catch
-                    {
-                        check = true;
-                    }
+                    check = false;
+                    File.WriteAllText(ConfigFilePath, String.Empty);
+                    File.WriteAllLines(ConfigFilePath, info);
+                }
+                catch
+                {
+                    check = true;
                 }
             }
         }

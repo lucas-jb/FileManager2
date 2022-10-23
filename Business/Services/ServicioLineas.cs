@@ -11,7 +11,7 @@ namespace Business
     {
         private bool Arrancado { get; set; } = true;
         public int Delay { get; set; } = 0;
-        public string Path { get; set; } = "FicheroDefault";
+        public string Path { get; set; }
         public int LimiteLineas { get; set; } = 5;
         public int NumeroLineas { get; set; } = 0;
         private int HiloId { get; set; }
@@ -23,7 +23,7 @@ namespace Business
             }
             else
             {
-                Start();
+                HiloController.MisHilos[HiloId].Comprobar();
             }
         }
         public void CambiarRuta(string path)
@@ -38,7 +38,7 @@ namespace Business
             {
                 Arrancado = LineasFichero.ComprobarModificacion(LimiteLineas, Path);
             }
-            Data.Info.Log.ImprimirLog(DateTime.Now.ToString()+" - Hilo ID: "+HiloId.ToString()+" Ruta: "+Path+" Limite lineas: "+LimiteLineas.ToString()+" Numero lineas: "+NumeroLineas.ToString());
+            Data.Info.Log.ImprimirLog(DateTime.Now.ToString()+" - Hilo ID: "+HiloId.ToString()+" Ruta: "+Path+" Limite lineas: "+LimiteLineas.ToString()+" Numero lineas: "+NumeroLineas.ToString() + Environment.NewLine);
         }
 
         public void Start()

@@ -9,7 +9,7 @@ namespace Business
     public class Hilo
     {
         public int Id { get; set; }
-        public string Path { get; set; } = string.Empty;
+        public string Path { get; set; }
         private Thread MiHilo;
         public IServicioFichero Servicio { get; set; }
 
@@ -17,7 +17,6 @@ namespace Business
         public void Comprobar()
         {
             Servicio.SetHiloId(Id);
-            Servicio.CambiarRuta(Path);
             MiHilo = new Thread(Servicio.Start);
             //Servicio.Alternar();
             MiHilo.Start();

@@ -4,10 +4,9 @@ namespace View
 {
     internal class Program
     {
-        static HiloController controller = new Business.HiloController();
-
         static void Main(string[] args)
         {
+            InitialSetup.CreateDependencies();
             while (Menu()==true)
             {
 
@@ -17,33 +16,39 @@ namespace View
         static bool Menu()
         {
             Console.Clear();
-            bool res = true;
-            Console.WriteLine("SERVICIOS ASÍNCRONOS\n" +
-                "1. Crear un hilo.\n" +
-                "2. Modificar un hilo.\n" +
-                "3. Cargar configuración.\n" +
-                "4. Guardar configuración.\n" +
-                "0. Salir\n");
-
-            int select = Convert.ToInt32(Console.ReadLine());
+            Console.WriteLine("SERVICIOS ASÍNCRONOS" + Environment.NewLine +
+                "1. Crear un hilo." + Environment.NewLine +
+                "2. Modificar un hilo." + Environment.NewLine +
+                "3. Cargar configuración." + Environment.NewLine +
+                "4. Guardar configuración." + Environment.NewLine +
+                "0. Salir" + Environment.NewLine);
+            int select;
+            try
+            {
+                select = Convert.ToInt32(Console.ReadLine());
+            }
+            catch
+            {
+                return true;
+            }
             Console.Clear();
 
             if(select == 1) {return CrearHilo(); }
             if(select == 2) {return ModificarHilo(); }
-            if(select == 3) {controller.CargarConfig(); }
-            if(select == 4) {controller.GuardarConfig(); }
+            if(select == 3) {HiloController.CargarConfig(); }
+            if(select == 4) {HiloController.GuardarConfig(); }
             if(select < 1 || select > 4) { return false; }
-            return res;
+            return true;
         }
         static bool CrearHilo()
         {
             Console.Clear();
-            Console.WriteLine("1 - Ultima modificación.\n" +
-                              "2 - Número de líneas.\n" +
+            Console.WriteLine("1 - Ultima modificación." + Environment.NewLine +
+                              "2 - Número de líneas." + Environment.NewLine +
                               "Introduce el tipo del hilo a crear:");
             int id = PedirNum();
-            if(id == 1) { controller.CreateModificacion(PedirText(true)); }
-            if(id == 2) { controller.CreateLineas(PedirText(false)); }
+            if(id == 1) { HiloController.CreateModificacion(PedirText(true)); }
+            if(id == 2) { HiloController.CreateLineas(PedirText(false)); }
             if(id < 1 || id > 2) { return true; }
             return true;
         }
@@ -63,9 +68,9 @@ namespace View
         }
         static bool RedirigirMenu(int id)
         {
-            if (controller.MisHilos.ContainsKey(id)) 
+            if (HiloController.MisHilos.ContainsKey(id)) 
             { 
-                Type tipo = controller.MisHilos[id].Servicio.GetType();
+                Type tipo = HiloController.MisHilos[id].Servicio.GetType();
                 Type modificar = typeof(ServicioModificacion);
                 Type lineas = typeof(ServicioLineas);
                 if(tipo == modificar) { return MenuModificar(id); }
@@ -82,19 +87,27 @@ namespace View
             {
                 Console.Clear();
                 DameInfo(id);
-                Console.WriteLine("COMPROBAR MODIFICACIÓN DE FICHERO\n" +
-                "1. Arrancar / Parar\n" +
-                "2. Fichero a comproboar\n" +
-                "3. Delay\n" +
-                "4. Actualizar información\n" +
-                "0. Salir al menú principal\n");
+                Console.WriteLine("COMPROBAR MODIFICACIÓN DE FICHERO" + Environment.NewLine +
+                "1. Arrancar / Parar" + Environment.NewLine +
+                "2. Fichero a comproboar" + Environment.NewLine +
+                "3. Delay" + Environment.NewLine +
+                "4. Actualizar información" + Environment.NewLine +
+                "0. Salir al menú principal" + Environment.NewLine);
 
-                int select = Convert.ToInt32(Console.ReadLine());
+                int select;
+                try
+                {
+                    select = Convert.ToInt32(Console.ReadLine());
+                }
+                catch
+                {
+                    return true;
+                }
                 Console.Clear();
 
-                if (select == 1) { controller.MisHilos[id].Servicio.Alternar(); }
-                if (select == 2) { controller.MisHilos[id].Servicio.CambiarRuta(PedirText(true)); }
-                if (select == 3) { controller.MisHilos[id].Servicio.CambiarDelay(PedirNum()); }
+                if (select == 1) { HiloController.MisHilos[id].Servicio.Alternar(); }
+                if (select == 2) { HiloController.MisHilos[id].Servicio.CambiarRuta(PedirText(true)); }
+                if (select == 3) { HiloController.MisHilos[id].Servicio.CambiarDelay(PedirNum()); }
                 if (select == 4) { }
                 if (select < 1 || select > 4) { check = false; }
             }
@@ -107,21 +120,29 @@ namespace View
             {
                 Console.Clear();
                 DameInfo(id);
-                Console.WriteLine("COMPROBAR LINEAS DE FICHERO\n" +
-                "1. Arrancar / Parar\n" +
-                "2. Fichero a comproboar\n" +
-                "3. Número límite de líneas\n" +
-                "4. Delay\n" +
-                "5. Actualizar información\n" +
-                "0. Salir al menú principal\n");
+                Console.WriteLine("COMPROBAR LINEAS DE FICHERO" + Environment.NewLine +
+                "1. Arrancar / Parar" + Environment.NewLine +
+                "2. Fichero a comproboar" + Environment.NewLine +
+                "3. Número límite de líneas" + Environment.NewLine +
+                "4. Delay" + Environment.NewLine +
+                "5. Actualizar información" + Environment.NewLine +
+                "0. Salir al menú principal" + Environment.NewLine);
 
-                int select = Convert.ToInt32(Console.ReadLine());
+                int select;
+                try
+                {
+                    select = Convert.ToInt32(Console.ReadLine());
+                }
+                catch
+                {
+                    return true;
+                }
                 Console.Clear();
 
-                if (select == 1) { controller.MisHilos[id].Servicio.Alternar(); }
-                if (select == 2) { controller.MisHilos[id].Servicio.CambiarRuta(PedirText(false)); }
-                if (select == 3) { controller.MisHilos[id].Servicio.CambiarLimiteLineas(PedirNum()); }
-                if (select == 4) { controller.MisHilos[id].Servicio.CambiarDelay(PedirNum()); }
+                if (select == 1) { HiloController.MisHilos[id].Servicio.Alternar(); }
+                if (select == 2) { HiloController.MisHilos[id].Servicio.CambiarRuta(PedirText(false)); }
+                if (select == 3) { HiloController.MisHilos[id].Servicio.CambiarLimiteLineas(PedirNum()); }
+                if (select == 4) { HiloController.MisHilos[id].Servicio.CambiarDelay(PedirNum()); }
                 if (select == 5) { }
                 if (select < 1 || select > 5) { check = false; }
             }
@@ -130,24 +151,33 @@ namespace View
 
         static string PedirText(bool tipo)
         {
-            Console.WriteLine("(Dejar en blanco para ruta por defecto)\n" + "Introduce la ruta absoluta:");
+            Console.WriteLine("(Dejar en blanco para ruta por defecto)" + Environment.NewLine + "Introduce la ruta absoluta:");
             string text = Console.ReadLine();
             if(text == string.Empty) 
             {
-                if (!tipo) { text = "ficheroDefault"; } 
-                if (tipo) { text = "directorioDefault"; } 
+                if (!tipo) { text = "DefaultFile"; } 
+                if (tipo) { text = "DefaultDirectory"; } 
             }
             return text;
         }
         static int PedirNum()
         {
-            int num = Convert.ToInt32(Console.ReadLine());
+            int num;
+            try
+            {
+                num = Convert.ToInt32(Console.ReadLine());
+            }
+            catch
+            {
+                Console.WriteLine("Introduce un valor numérico.");
+                return PedirNum();
+            }
             return num;
         }
 
         static bool PrintListHilos()
         {
-            if (controller.MisHilos.Count() == 0)
+            if (HiloController.MisHilos.Count() == 0)
             {
                 Console.WriteLine("No hay hilos creados.");
                 return false;
@@ -156,7 +186,7 @@ namespace View
             {
                 string hilosString = string.Empty;
                 string cabecera = "  Tipo        ID    " + Environment.NewLine + "--------------------" + Environment.NewLine;
-                foreach (Hilo h in controller.MisHilos.Values)
+                foreach (Hilo h in HiloController.MisHilos.Values)
                 {
                     hilosString = hilosString + h.ToString() + Environment.NewLine;
                 }
@@ -167,10 +197,10 @@ namespace View
 
         static bool DameInfo(int id)
         {
-            if (controller.MisHilos.ContainsKey(id))
+            if (HiloController.MisHilos.ContainsKey(id))
             {
                 Console.WriteLine("Info del hilo con id:" + id);
-                Console.WriteLine(controller.MisHilos[id].Servicio.DameInfo()+Environment.NewLine);
+                Console.WriteLine(HiloController.MisHilos[id].Servicio.DameInfo()+Environment.NewLine);
             }
             return true;
         }
