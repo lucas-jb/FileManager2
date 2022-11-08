@@ -53,9 +53,11 @@ namespace Business
                 ComprobarModificacion();
                 CambiarRuta(Path);
             }
-            Data.Info.Log.ImprimirLog(DateTime.Now.ToString() + " - Hilo ID: " + HiloId.ToString() + " Ruta: " + Path + " Limite lineas: " + LimiteLineas.ToString() + " Numero lineas: " + NumeroLineas.ToString() + Environment.NewLine);
+            string log = DateTime.Now.ToString() + " - Hilo ID: " + HiloId.ToString() + " Ruta: " + Path + " Limite lineas: " + LimiteLineas.ToString() + " Numero lineas: " + NumeroLineas.ToString() + Environment.NewLine;
+            Data.Info.Log.ImprimirLog(log);
             CambiarRuta(Path);
             EliminarLineasSobrantes();
+            HiloController.delegado(log);
         }
 
         private void EliminarLineasSobrantes()

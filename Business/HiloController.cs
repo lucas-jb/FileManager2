@@ -12,17 +12,14 @@ namespace Business
     {
         public static Dictionary<int, Hilo> MisHilos = new Dictionary<int, Hilo>();
         public static int Cont = 0;
+        public delegate void DelegateState(string log);
+        public static DelegateState delegado {get;set;}
 
         public static Hilo GenerarHilo(IServicioFichero Tipo, string path)
         {
             Cont++;
             return new Hilo() { Id = Cont, Servicio = Tipo, Path = path };
         }
-
-        //public static Hilo GenerarHilo(string service, string hilo)
-        //{
-            
-        //}
 
         public static void CreateModificacion(string path)
         {

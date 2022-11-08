@@ -7,11 +7,17 @@ namespace View
         static void Main(string[] args)
         {
             InitialSetup.CreateDependencies();
+            HiloController.DelegateState delegateState = new HiloController.DelegateState(DelegateFunction);
+            HiloController.delegado = delegateState;
             while (Menu()==true)
             {
 
             }
             Console.WriteLine("Hasta la proxima!");
+        }
+        static void DelegateFunction(string log)
+        {
+            Console.WriteLine(log);
         }
         static bool Menu()
         {

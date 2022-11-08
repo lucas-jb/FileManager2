@@ -30,8 +30,10 @@ namespace Business
                 Thread.Sleep(Delay);
                 ComprobarModificacion();
             }
-            Data.Info.Log.ImprimirLog(DateTime.Now.ToString() + " - Hilo ID: " + HiloId.ToString() + " Ruta: " + Path + " Ultima modificación¨: "+UltimaModificacionGuardada.ToString()+Environment.NewLine);
+            string log = DateTime.Now.ToString() + " - Hilo ID: " + HiloId.ToString() + " Ruta: " + Path + " Ultima modificación¨: " + UltimaModificacionGuardada.ToString() + Environment.NewLine;
+            Data.Info.Log.ImprimirLog(log);
             CambiarRuta(Path);
+            HiloController.delegado(log);
         }
         public void Alternar()
         {
